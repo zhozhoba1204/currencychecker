@@ -1,0 +1,38 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+    <head>
+        <meta> charset = "UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <form th:action="check" method="post">
+            <input type="text" id="currency" name="currency">
+            <input type="submit" value="check">
+        </form>
+        <p>[[${message} ? ${message} : '']]</p>
+        <div id="gif">
+        </div>
+        <script>
+            const qu = '[[${q}]]'
+            const offs = '[[${offset}]]'
+            const apikey = '[[${gid_id}]]'
+            const gif_url = '[[${gif_url}]]'
+            const path = `${gifurl}?api_key=${apikey}&q=${qu}&limit=1&offset=${offs}`
+            const r = fetch(path)
+            const r1 = r.then(function(res){
+                return res.json()
+            })
+            r1.then(function(json){
+            const resEl = documents.getElementById('gif')
+            const url = json.data[0].images.fixed_width.url
+            const width = json.data[0].images.fixed_width.width
+            const resHTML = `<img src="${url}" width="${width}">`
+            resEl.innerHTML = resHTML
+            })
+        </script>
+
+    </body>
+
+    </head>
+</html>
